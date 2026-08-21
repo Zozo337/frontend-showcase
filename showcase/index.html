@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enterprise Product Showcase</title>
+    <style>
+      :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      * { box-sizing: border-box; }
+      body { margin: 0; min-height: 100vh; color: #f8fafc; background: radial-gradient(circle at 15% 15%, #123c68 0, transparent 34%), radial-gradient(circle at 85% 20%, #3b1f66 0, transparent 32%), #08111f; }
+      main { width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 88px 0; }
+      .eyebrow { color: #7dd3fc; font-size: 13px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+      h1 { max-width: 850px; margin: 18px 0 20px; font-size: clamp(42px, 7vw, 76px); line-height: .98; letter-spacing: -.045em; }
+      .lead { max-width: 720px; margin: 0; color: #b8c4d6; font-size: 19px; line-height: 1.75; }
+      .notice { display: inline-flex; gap: 8px; align-items: center; margin-top: 24px; padding: 10px 14px; color: #bbf7d0; background: #14532d55; border: 1px solid #22c55e55; border-radius: 999px; font-size: 13px; }
+      .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin-top: 56px; }
+      .card { position: relative; min-height: 330px; padding: 34px; overflow: hidden; color: inherit; text-decoration: none; border: 1px solid #ffffff1f; border-radius: 26px; background: linear-gradient(145deg, #ffffff12, #ffffff08); box-shadow: 0 28px 80px #0006; transition: transform .2s ease, border-color .2s ease; }
+      .card:hover { transform: translateY(-6px); border-color: #7dd3fc88; }
+      .card::after { content: ""; position: absolute; width: 190px; height: 190px; right: -70px; bottom: -80px; border-radius: 50%; background: var(--glow); filter: blur(4px); opacity: .32; }
+      .oa { --glow: #2563eb; }
+      .nova { --glow: #10b981; }
+      .icon { display: grid; width: 58px; height: 58px; place-items: center; border-radius: 18px; background: #ffffff14; font-size: 27px; }
+      h2 { margin: 28px 0 10px; font-size: 31px; }
+      .card p { margin: 0; color: #b8c4d6; line-height: 1.7; }
+      .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 25px; }
+      .tags span { padding: 7px 10px; color: #dbeafe; background: #ffffff0d; border: 1px solid #ffffff12; border-radius: 9px; font-size: 12px; }
+      .cta { position: absolute; left: 34px; bottom: 30px; color: #fff; font-weight: 750; }
+      footer { margin-top: 42px; color: #718096; font-size: 13px; }
+      @media (max-width: 760px) { main { padding: 54px 0; } .grid { grid-template-columns: 1fr; } .card { min-height: 350px; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="eyebrow">Frontend-only interactive portfolio</div>
+      <h1>Enterprise operations, approvals, and AI workflows.</h1>
+      <p class="lead">兩套可操作的產品介面，展示企業 OA 與 Agent Workflow Hub。所有資料均為瀏覽器內的合成資料，不連線任何公司系統。</p>
+      <div class="notice">● Public-safe · Browser Mock API · No production backend</div>
+
+      <section class="grid">
+        <a class="card oa" href="./oa/">
+          <div class="icon">🏢</div>
+          <h2>Demo OA</h2>
+          <p>員工、組織、資產、IT 帳號、表單設計與多階簽核的企業營運工作台。</p>
+          <div class="tags"><span>Vue 3</span><span>Approvals</span><span>Assets</span><span>RBAC UI</span></div>
+          <div class="cta">Open interactive demo →</div>
+        </a>
+        <a class="card nova" href="./novakit/">
+          <div class="icon">⌁</div>
+          <h2>NovaKit</h2>
+          <p>深色綠色 System Controller，展示 Agent Hub、Workflow、模組、執行監控與 Mock AI Chat。</p>
+          <div class="tags"><span>System Controller</span><span>Agents</span><span>Observability</span><span>Mock AI</span></div>
+          <div class="cta">Open interactive demo →</div>
+        </a>
+      </section>
+      <footer>All people, identifiers, domains, workflow runs, and business records shown here are fictional.</footer>
+    </main>
+  </body>
+</html>

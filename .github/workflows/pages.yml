@@ -1,0 +1,57 @@
+name: Deploy frontend showcase
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.5.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: oa/pnpm-lock.yaml
+      - name: Build Airway OA
+        working-directory: oa
+        env:
+          VITE_BASE_URL: /${{ github.event.repository.name }}/oa/
+        run: pnpm install --frozen-lockfile && pnpm build
+      - name: Build NovaKit
+        working-directory: novakit
+        run: npm ci && npm run build -- --base=/${{ github.event.repository.name }}/novakit/
+      - name: Assemble static site
+        run: |
+          mkdir -p _site/oa _site/novakit
+          cp showcase/index.html _site/index.html
+          cp -R oa/dist/. _site/oa/
+          cp -R novakit/dist/. _site/novakit/
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
