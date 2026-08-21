@@ -3,56 +3,633 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Enterprise Product Showcase</title>
+    <meta name="theme-color" content="#030712" />
+    <title>Enterprise Systems // Interactive Showcase</title>
     <style>
-      :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      :root {
+        color-scheme: dark;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --ink: #030712;
+        --panel: rgb(8 15 29 / 82%);
+        --line: rgb(148 163 184 / 16%);
+        --muted: #91a0b8;
+        --oa: #60a5fa;
+        --oa-deep: #7c3aed;
+        --nova: #34d399;
+        --nova-deep: #0891b2;
+      }
+
       * { box-sizing: border-box; }
-      body { margin: 0; min-height: 100vh; color: #f8fafc; background: radial-gradient(circle at 15% 15%, #123c68 0, transparent 34%), radial-gradient(circle at 85% 20%, #3b1f66 0, transparent 32%), #08111f; }
-      main { width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 88px 0; }
-      .eyebrow { color: #7dd3fc; font-size: 13px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
-      h1 { max-width: 850px; margin: 18px 0 20px; font-size: clamp(42px, 7vw, 76px); line-height: .98; letter-spacing: -.045em; }
-      .lead { max-width: 720px; margin: 0; color: #b8c4d6; font-size: 19px; line-height: 1.75; }
-      .notice { display: inline-flex; gap: 8px; align-items: center; margin-top: 24px; padding: 10px 14px; color: #bbf7d0; background: #14532d55; border: 1px solid #22c55e55; border-radius: 999px; font-size: 13px; }
-      .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin-top: 56px; }
-      .card { position: relative; min-height: 330px; padding: 34px; overflow: hidden; color: inherit; text-decoration: none; border: 1px solid #ffffff1f; border-radius: 26px; background: linear-gradient(145deg, #ffffff12, #ffffff08); box-shadow: 0 28px 80px #0006; transition: transform .2s ease, border-color .2s ease; }
-      .card:hover { transform: translateY(-6px); border-color: #7dd3fc88; }
-      .card::after { content: ""; position: absolute; width: 190px; height: 190px; right: -70px; bottom: -80px; border-radius: 50%; background: var(--glow); filter: blur(4px); opacity: .32; }
-      .oa { --glow: #2563eb; }
-      .nova { --glow: #10b981; }
-      .icon { display: grid; width: 58px; height: 58px; place-items: center; border-radius: 18px; background: #ffffff14; font-size: 27px; }
-      h2 { margin: 28px 0 10px; font-size: 31px; }
-      .card p { margin: 0; color: #b8c4d6; line-height: 1.7; }
-      .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 25px; }
-      .tags span { padding: 7px 10px; color: #dbeafe; background: #ffffff0d; border: 1px solid #ffffff12; border-radius: 9px; font-size: 12px; }
-      .cta { position: absolute; left: 34px; bottom: 30px; color: #fff; font-weight: 750; }
-      footer { margin-top: 42px; color: #718096; font-size: 13px; }
-      @media (max-width: 760px) { main { padding: 54px 0; } .grid { grid-template-columns: 1fr; } .card { min-height: 350px; } }
+
+      html { min-width: 320px; background: var(--ink); }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        overflow-x: hidden;
+        color: #f8fafc;
+        background:
+          radial-gradient(circle at 14% 18%, rgb(37 99 235 / 18%), transparent 28%),
+          radial-gradient(circle at 86% 16%, rgb(16 185 129 / 15%), transparent 26%),
+          radial-gradient(circle at 54% 92%, rgb(124 58 237 / 12%), transparent 30%),
+          linear-gradient(145deg, #02040a 0%, #050b18 46%, #030712 100%);
+      }
+
+      body::before {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        content: "";
+        opacity: .38;
+        background-image:
+          linear-gradient(rgb(96 165 250 / 7%) 1px, transparent 1px),
+          linear-gradient(90deg, rgb(52 211 153 / 6%) 1px, transparent 1px);
+        background-size: 54px 54px;
+        mask-image: linear-gradient(to bottom, black, transparent 88%);
+      }
+
+      body::after {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        content: "";
+        background: linear-gradient(90deg, transparent 49.9%, rgb(125 211 252 / 7%) 50%, transparent 50.1%);
+      }
+
+      a { color: inherit; }
+
+      .shell {
+        width: min(1260px, calc(100% - 44px));
+        margin: 0 auto;
+        padding: 30px 0 42px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 50px;
+        gap: 18px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .13em;
+      }
+
+      .brand-mark {
+        position: relative;
+        display: grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        border: 1px solid rgb(125 211 252 / 48%);
+        color: #a5f3fc;
+        background: rgb(8 47 73 / 48%);
+        box-shadow: 0 0 22px rgb(34 211 238 / 15%);
+      }
+
+      .brand-mark::after {
+        position: absolute;
+        right: -4px;
+        bottom: -4px;
+        width: 7px;
+        height: 7px;
+        content: "";
+        background: var(--nova);
+        box-shadow: 0 0 10px var(--nova);
+      }
+
+      .status {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: #86efac;
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 10px;
+        letter-spacing: .12em;
+      }
+
+      .status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 12px #22c55e;
+        animation: pulse 2.4s ease-in-out infinite;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(260px, .65fr);
+        gap: 54px;
+        align-items: end;
+        padding: 74px 0 54px;
+      }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #67e8f9;
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: .18em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        width: 34px;
+        height: 1px;
+        content: "";
+        background: #22d3ee;
+        box-shadow: 0 0 10px #22d3ee;
+      }
+
+      h1 {
+        max-width: 860px;
+        margin: 20px 0 22px;
+        font-size: clamp(48px, 6.5vw, 88px);
+        line-height: .96;
+        letter-spacing: -.055em;
+      }
+
+      h1 .outline {
+        color: transparent;
+        -webkit-text-stroke: 1px rgb(203 213 225 / 72%);
+      }
+
+      .lead {
+        max-width: 720px;
+        margin: 0;
+        color: #a9b6c9;
+        font-size: 17px;
+        line-height: 1.8;
+      }
+
+      .hero-meta {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        border: 1px solid var(--line);
+        background: rgb(4 10 22 / 68%);
+        box-shadow: inset 0 1px rgb(255 255 255 / 3%);
+      }
+
+      .metric {
+        min-height: 90px;
+        padding: 18px;
+      }
+
+      .metric:nth-child(odd) { border-right: 1px solid var(--line); }
+      .metric:nth-child(-n + 2) { border-bottom: 1px solid var(--line); }
+
+      .metric span {
+        display: block;
+        color: #64748b;
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 9px;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+
+      .metric strong {
+        display: block;
+        margin-top: 9px;
+        color: #dbeafe;
+        font-size: 15px;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 18px;
+      }
+
+      .section-head h2 {
+        margin: 0;
+        font-size: 13px;
+        letter-spacing: .15em;
+        text-transform: uppercase;
+      }
+
+      .section-head p {
+        margin: 0;
+        color: #64748b;
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 10px;
+      }
+
+      .systems {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .system-card {
+        --accent: var(--oa);
+        --accent-deep: var(--oa-deep);
+        position: relative;
+        display: grid;
+        min-height: 480px;
+        grid-template-rows: auto 1fr auto;
+        overflow: hidden;
+        border: 1px solid rgb(96 165 250 / 24%);
+        color: inherit;
+        text-decoration: none;
+        background:
+          linear-gradient(145deg, rgb(15 23 42 / 88%), rgb(5 10 22 / 92%)),
+          var(--panel);
+        box-shadow: 0 30px 90px rgb(0 0 0 / 32%);
+        transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease;
+      }
+
+      .system-card.nova {
+        --accent: var(--nova);
+        --accent-deep: var(--nova-deep);
+        border-color: rgb(52 211 153 / 24%);
+      }
+
+      .system-card::before {
+        position: absolute;
+        inset: 0 0 auto;
+        height: 2px;
+        content: "";
+        background: linear-gradient(90deg, transparent, var(--accent), var(--accent-deep), transparent);
+        box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 52%, transparent);
+      }
+
+      .system-card::after {
+        position: absolute;
+        right: -120px;
+        bottom: -160px;
+        width: 330px;
+        height: 330px;
+        border: 1px solid color-mix(in srgb, var(--accent) 17%, transparent);
+        border-radius: 50%;
+        content: "";
+        box-shadow: 0 0 0 55px color-mix(in srgb, var(--accent) 3%, transparent), 0 0 0 110px color-mix(in srgb, var(--accent) 2%, transparent);
+      }
+
+      .system-card:hover {
+        z-index: 2;
+        transform: translateY(-7px);
+        border-color: color-mix(in srgb, var(--accent) 62%, transparent);
+        box-shadow: 0 38px 100px rgb(0 0 0 / 42%), 0 0 46px color-mix(in srgb, var(--accent) 11%, transparent);
+      }
+
+      .card-head {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 28px 30px 22px;
+      }
+
+      .system-id {
+        color: var(--accent);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: .14em;
+      }
+
+      .card-head h3 {
+        margin: 8px 0 7px;
+        font-size: 34px;
+        letter-spacing: -.035em;
+      }
+
+      .card-head p {
+        max-width: 430px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .system-icon {
+        display: grid;
+        width: 52px;
+        height: 52px;
+        flex: 0 0 52px;
+        place-items: center;
+        border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+        color: var(--accent);
+        background: color-mix(in srgb, var(--accent) 9%, transparent);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 16px;
+        font-weight: 900;
+        box-shadow: inset 0 0 22px color-mix(in srgb, var(--accent) 7%, transparent), 0 0 26px color-mix(in srgb, var(--accent) 9%, transparent);
+      }
+
+      .screen {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 78px 1fr;
+        min-height: 190px;
+        margin: 0 30px;
+        overflow: hidden;
+        border: 1px solid color-mix(in srgb, var(--accent) 22%, #1e293b);
+        background: #050a13;
+        box-shadow: 0 18px 42px rgb(0 0 0 / 28%);
+      }
+
+      .screen-sidebar {
+        border-right: 1px solid color-mix(in srgb, var(--accent) 18%, #1e293b);
+        padding: 15px 11px;
+        background: color-mix(in srgb, var(--accent) 4%, #050a13);
+      }
+
+      .mini-logo {
+        width: 20px;
+        height: 20px;
+        margin-bottom: 22px;
+        background: linear-gradient(145deg, var(--accent), var(--accent-deep));
+        box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 28%, transparent);
+      }
+
+      .nav-line,
+      .data-line {
+        height: 5px;
+        margin: 9px 0;
+        border-radius: 999px;
+        background: #1b2638;
+      }
+
+      .nav-line.active { width: 88%; background: color-mix(in srgb, var(--accent) 56%, #1b2638); }
+      .nav-line.short { width: 62%; }
+
+      .screen-main { padding: 16px; }
+
+      .screen-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 13px;
+        border-bottom: 1px solid #172033;
+      }
+
+      .screen-title { width: 90px; height: 7px; border-radius: 999px; background: #46566e; }
+      .screen-action { width: 42px; height: 16px; background: color-mix(in srgb, var(--accent) 65%, #0f172a); }
+
+      .screen-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-top: 13px;
+      }
+
+      .mini-card {
+        min-height: 48px;
+        border: 1px solid #17243a;
+        padding: 9px;
+        background: #09111f;
+      }
+
+      .mini-card::before {
+        display: block;
+        width: 11px;
+        height: 11px;
+        margin-bottom: 8px;
+        content: "";
+        background: color-mix(in srgb, var(--accent) 72%, #111827);
+        box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 18%, transparent);
+      }
+
+      .mini-card .data-line { width: 74%; height: 4px; margin: 0; }
+
+      .screen-table {
+        margin-top: 10px;
+        border: 1px solid #152033;
+        padding: 7px 10px;
+      }
+
+      .screen-table .data-line:nth-child(1) { width: 94%; background: #26364e; }
+      .screen-table .data-line:nth-child(2) { width: 78%; }
+      .screen-table .data-line:nth-child(3) { width: 86%; }
+
+      .card-foot {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 24px 30px 28px;
+      }
+
+      .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+
+      .tags span {
+        border: 1px solid color-mix(in srgb, var(--accent) 19%, #334155);
+        padding: 6px 9px;
+        color: #aebdd1;
+        background: rgb(15 23 42 / 68%);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 9px;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+      }
+
+      .launch {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 0 0 auto;
+        color: var(--accent);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+
+      .launch i {
+        display: grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+        font-style: normal;
+        transition: transform .2s ease, background .2s ease;
+      }
+
+      .system-card:hover .launch i {
+        transform: translateX(3px);
+        background: color-mix(in srgb, var(--accent) 12%, transparent);
+      }
+
+      footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        margin-top: 24px;
+        padding: 18px 2px 0;
+        border-top: 1px solid var(--line);
+        color: #5f7089;
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 9px;
+        line-height: 1.6;
+        letter-spacing: .07em;
+        text-transform: uppercase;
+      }
+
+      .safe-note { color: #6ee7b7; }
+
+      @keyframes pulse {
+        50% { opacity: .45; transform: scale(.82); }
+      }
+
+      @media (max-width: 900px) {
+        .hero { grid-template-columns: 1fr; gap: 30px; padding-top: 56px; }
+        .hero-meta { max-width: 520px; }
+        .systems { grid-template-columns: 1fr; }
+        .system-card { min-height: 460px; }
+      }
+
+      @media (max-width: 600px) {
+        .shell { width: min(100% - 26px, 1260px); padding-top: 18px; }
+        .brand { letter-spacing: .07em; }
+        .status { font-size: 8px; }
+        .hero { padding: 48px 0 42px; }
+        h1 { font-size: clamp(44px, 15vw, 64px); }
+        .lead { font-size: 15px; }
+        .section-head { align-items: flex-start; flex-direction: column; gap: 7px; }
+        .card-head { padding: 24px 22px 18px; }
+        .card-head h3 { font-size: 30px; }
+        .screen { margin: 0 22px; grid-template-columns: 60px 1fr; }
+        .screen-grid { grid-template-columns: repeat(2, 1fr); }
+        .mini-card:last-child { display: none; }
+        .card-foot { align-items: flex-start; padding: 21px 22px 24px; flex-direction: column; }
+        footer { align-items: flex-start; flex-direction: column; gap: 8px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+      }
     </style>
   </head>
   <body>
-    <main>
-      <div class="eyebrow">Frontend-only interactive portfolio</div>
-      <h1>Enterprise operations, approvals, and AI workflows.</h1>
-      <p class="lead">兩套可操作的產品介面，展示企業 OA 與 Agent Workflow Hub。所有資料均為瀏覽器內的合成資料，不連線任何公司系統。</p>
-      <div class="notice">● Public-safe · Browser Mock API · No production backend</div>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">//</span>
+          <span>PORTFOLIO_OS</span>
+        </div>
+        <div class="status"><span class="status-dot"></span>ALL SYSTEMS ONLINE</div>
+      </header>
 
-      <section class="grid">
-        <a class="card oa" href="./oa/">
-          <div class="icon">🏢</div>
-          <h2>Demo OA</h2>
-          <p>員工、組織、資產、IT 帳號、表單設計與多階簽核的企業營運工作台。</p>
-          <div class="tags"><span>Vue 3</span><span>Approvals</span><span>Assets</span><span>RBAC UI</span></div>
-          <div class="cta">Open interactive demo →</div>
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Interactive enterprise showcase</div>
+          <h1>Two systems.<br /><span class="outline">One control layer.</span></h1>
+          <p class="lead">從企業 OA 到 AI Agent 控制中台，直接進入兩套可操作的產品介面。所有展示資料均在瀏覽器內生成，不連線任何正式環境。</p>
+        </div>
+        <aside class="hero-meta" aria-label="Demo environment status">
+          <div class="metric"><span>Environment</span><strong>Public Demo</strong></div>
+          <div class="metric"><span>Data Mode</span><strong>Synthetic</strong></div>
+          <div class="metric"><span>Backend</span><strong>Browser Mock</strong></div>
+          <div class="metric"><span>Systems</span><strong>02 Online</strong></div>
+        </aside>
+      </section>
+
+      <div class="section-head">
+        <h2>Select system // 選擇展示系統</h2>
+        <p>CLICK A MODULE TO INITIALIZE</p>
+      </div>
+
+      <section class="systems">
+        <a class="system-card oa" href="./oa/" aria-label="開啟 Demo OA">
+          <header class="card-head">
+            <div>
+              <div class="system-id">SYS_01 // OPERATIONS</div>
+              <h3>Demo OA</h3>
+              <p>企業營運、組織人事、IT 資產、帳號治理、表單設計與多階簽核工作台。</p>
+            </div>
+            <div class="system-icon">OA</div>
+          </header>
+
+          <div class="screen" aria-hidden="true">
+            <div class="screen-sidebar">
+              <div class="mini-logo"></div>
+              <div class="nav-line active"></div>
+              <div class="nav-line"></div>
+              <div class="nav-line short"></div>
+              <div class="nav-line"></div>
+              <div class="nav-line short"></div>
+            </div>
+            <div class="screen-main">
+              <div class="screen-bar"><span class="screen-title"></span><span class="screen-action"></span></div>
+              <div class="screen-grid">
+                <div class="mini-card"><div class="data-line"></div></div>
+                <div class="mini-card"><div class="data-line"></div></div>
+                <div class="mini-card"><div class="data-line"></div></div>
+              </div>
+              <div class="screen-table"><div class="data-line"></div><div class="data-line"></div><div class="data-line"></div></div>
+            </div>
+          </div>
+
+          <footer class="card-foot">
+            <div class="tags"><span>HR Ops</span><span>Approvals</span><span>Assets</span><span>RBAC</span></div>
+            <span class="launch">Initialize <i>→</i></span>
+          </footer>
         </a>
-        <a class="card nova" href="./novakit/">
-          <div class="icon">⌁</div>
-          <h2>NovaKit</h2>
-          <p>深色綠色 System Controller，展示 Agent Hub、Workflow、模組、執行監控與 Mock AI Chat。</p>
-          <div class="tags"><span>System Controller</span><span>Agents</span><span>Observability</span><span>Mock AI</span></div>
-          <div class="cta">Open interactive demo →</div>
+
+        <a class="system-card nova" href="./novakit/" aria-label="開啟 NovaKit">
+          <header class="card-head">
+            <div>
+              <div class="system-id">SYS_02 // AGENT CONTROL</div>
+              <h3>NovaKit</h3>
+              <p>深色綠色 System Controller，整合 Agent Hub、Workflow、模組治理、執行監控與 AI Chat。</p>
+            </div>
+            <div class="system-icon">N_</div>
+          </header>
+
+          <div class="screen" aria-hidden="true">
+            <div class="screen-sidebar">
+              <div class="mini-logo"></div>
+              <div class="nav-line active"></div>
+              <div class="nav-line short"></div>
+              <div class="nav-line"></div>
+              <div class="nav-line"></div>
+              <div class="nav-line short"></div>
+            </div>
+            <div class="screen-main">
+              <div class="screen-bar"><span class="screen-title"></span><span class="screen-action"></span></div>
+              <div class="screen-grid">
+                <div class="mini-card"><div class="data-line"></div></div>
+                <div class="mini-card"><div class="data-line"></div></div>
+                <div class="mini-card"><div class="data-line"></div></div>
+              </div>
+              <div class="screen-table"><div class="data-line"></div><div class="data-line"></div><div class="data-line"></div></div>
+            </div>
+          </div>
+
+          <footer class="card-foot">
+            <div class="tags"><span>Agents</span><span>Workflow</span><span>Modules</span><span>Mock AI</span></div>
+            <span class="launch">Initialize <i>→</i></span>
+          </footer>
         </a>
       </section>
-      <footer>All people, identifiers, domains, workflow runs, and business records shown here are fictional.</footer>
+
+      <footer>
+        <span class="safe-note">● PUBLIC-SAFE // FRONTEND-ONLY // NO PRODUCTION BACKEND</span>
+        <span>ALL PEOPLE, IDENTIFIERS AND BUSINESS RECORDS ARE FICTIONAL</span>
+      </footer>
     </main>
   </body>
 </html>
